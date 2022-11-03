@@ -5,7 +5,8 @@ import { GlobalContext } from '../context/GlobalState';
 const AddTransact = () => {
 
   const [text, setText] = useState('');
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState('');
+  const [isSubmit, setIsSubmit] = useState(false);
 
   const { addTransaction } = useContext(GlobalContext);
 
@@ -19,6 +20,9 @@ const AddTransact = () => {
     }
 
     addTransaction(newTransaction);
+    setIsSubmit(true);
+    setText('');
+    setAmount('');
   }
 
   return (
@@ -26,16 +30,18 @@ const AddTransact = () => {
         <h3>Add New Transactions</h3>
         <form onSubmit={onSubmit}>
             <div className='form-control'>
-                <label htmlFor="text">Text</label>
+                <label htmlFor="text">Label</label>
                 <input type="text"
+                className='inputs'
                 value={text}
                 onChange={(e) => setText(e.target.value)} 
                 placeholder='Enter text...'></input>
             </div>
             <div className='form-control'>
                 <label htmlFor="amount">Amount <br />
-                (negative - expense, positive - income)</label>
-                <input type='number' 
+                (Include '-' for expense and '+' for income)</label>
+                <input type='number'
+                className='inputs'
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 placeholder='Enter Amount...' />
